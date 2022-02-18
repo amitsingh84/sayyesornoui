@@ -4,8 +4,9 @@
 import * as VueRouter from 'vue-router';
 import UserLogin from '../auth/views/UserLogin.vue'
 import Login from '../auth/views/Login.vue'
+
 import ChangePassword from '../auth/views/ChangePassword.vue'
-Vue.use(VueRouter);
+// Vue.use(VueRouter);
 
 
 const routes = [
