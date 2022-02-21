@@ -1,11 +1,10 @@
 <template>
   <div class="new_form_demo">
     <div class="form_btn">
-     <draggable
+      <draggable
         class="dragArea list-group"
         :list="elements"
         :group="{ name: 'elements', pull: 'clone', put: false }"
-         
         item-key="name"
         :clone="onClone"
       >
@@ -23,17 +22,16 @@
         group="elements"
         item-key="name"
       >
-        <template #item="{ element,index }">
+        <template #item="{ element, index }">
           <div>
-          <FormItem :el="element" :index="index" :items="newElements"></FormItem>
-          {{ element.name }}
-          {{index}}
-          {{element}}
+            <FormItem
+              :el="element"
+              :index="index"
+              :items="newElements"
+            ></FormItem>
           </div>
         </template>
       </draggable>
-
-      
     </div>
     <div class="form_property">
       <div class="flex justify-between">
@@ -47,55 +45,73 @@
 <script>
 // import { VueDraggableNext } from "vue-draggable-next";
 import draggable from "vuedraggable";
-// import FormItem from './FormItem.vue'
+import FormItem from "./FormItem.vue";
 import jsonDisplay from "./jsonDisplay.vue";
+import { elements } from "./componentConfig.js";
 export default {
   components: {
     draggable,
     jsonDisplay,
-    // FormItem
+    FormItem,
   },
   data() {
     return {
+      elements,
       drag: false,
-      elements: [
-        {
-          type: "container",
-          name: "Container",
-          container: true,
-          items: [],
-          id: 0,
-        },
-        {
-          type: "row",
-          name: "Row",
-          container: true,
-          row: true,
-          items: [],
-          id: 0,
-        },
-        {
-          type: "column",
-          columnSize: 6,
-          name: "Column",
-          container: true,
-          column: true,
-          items: [],
-          id: 0,
-        },
-        { type: "panel", name: "Panel", container: true, items: [], id: 0 },
-        { type: "input", name: "Text Input", id: 0 },
-        { type: "textarea", name: "Textarea", id: 0 },
-        { type: "button", name: "Button", id: 0 },
-        { type: "text", name: "Text Block", id: 0, body: "Sample Text" },
-      ],
+      // elements: [
+      //   {
+      //     type: "container",
+      //     name: "Container",
+      //     container: true,
+      //     items: [],
+      //     id: 0,
+      //   },
+      //   {
+      //     type: "row",
+      //     name: "Row",
+      //     container: true,
+      //     row: true,
+      //     items: [],
+      //     id: 0,
+      //   },
+      //   {
+      //     type: "column",
+      //     columnSize: 6,
+      //     name: "Column",
+      //     container: true,
+      //     column: true,
+      //     items: [],
+      //     id: 0,
+      //   },
+      //   { type: "panel", name: "Panel", container: true, items: [], id: 0 },
+      //   { type: "input", name: "Text Input", id: 0 },
+      //   { type: "textarea", name: "Textarea", id: 0 },
+      //   { type: "button", name: "Button", id: 0 },
+      //   { type: "text", name: "Text Block", id: 0, body: "Sample Text" },
+      // ],
       newElements: [],
       draggable: false,
       elIndex: 0,
     };
   },
+  mounted() {
+    this._loadComponents();
+  },
   methods: {
+    _loadComponents() {
+      this.elements = this.elements.map((item) => {
+        return {
+          ...item,
+          // name: this.$t(`fm.components.fields.${item.type}`),
+        };
+      });
+    },
+    checkTypes: function (el, parent) {
+      console.log("element", el, parent);
+    },
     onClone: function (el) {
+      this.checkTypes();
+      console.log("clone");
       this.elIndex++;
       console.log(el);
       if (el.type == "container" || el.type == "panel") {
