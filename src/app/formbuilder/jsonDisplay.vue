@@ -2,10 +2,13 @@
   <div>
     <h3>{{ title }}</h3>
     <pre class="bg-gray-300 rounded-lg p-5">{{ value }}</pre>
+    <!-- <preview :newValue={value} /> -->
   </div>
 </template>
 <script>
+// import Preview from './Preview.vue'
 export default {
+  // components: { Preview },
   props: {
     title: {
       default: '',
@@ -14,6 +17,9 @@ export default {
     value: {
       required: true,
     },
+  },
+  mounted() {
+    console.log(this.value)
   },
 }
 </script>

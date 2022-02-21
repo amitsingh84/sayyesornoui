@@ -1,13 +1,13 @@
 <template>
   <div :class="['element element-' + el.type]">
-    <span>{{ el.type !== "text" ? el.name : el.body }}</span>
+    <!-- <span>{{ el.type !== "text" ? el.name : el.body }}</span> -->
     <span class="element-col" v-if="el.type == 'column'"
       >({{ el.columnSize }} of 12)</span
     >
     <div class="element-tools">
-      <FormItemEdit :item="el" v-show="noEdit"></FormItemEdit>
+      <FormItemEdit :item="el" :id="id" v-show="noEdit"></FormItemEdit>
 
-      <p>testing</p>
+      <p>foritem</p>
       <!-- <button @click="deleteItem" color="danger" vs-size="small" vs-type="flat">&#x2715;</button> -->
     </div>
 
@@ -18,7 +18,7 @@
 // import draggableChild from "./draggable-child.vue";
 import FormItemEdit from "./FormItemEdit.vue";
 export default {
-  props: ["el", "index", "items"],
+  props: ["el", "index", "items","id"],
   name: "FormItem",
   components: {
     // draggableChild,
@@ -26,6 +26,7 @@ export default {
   },
   mounted() {
     console.log(this.el);
+    
   },
   computed: {
     noEdit() {

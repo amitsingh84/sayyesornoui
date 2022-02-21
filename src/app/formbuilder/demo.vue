@@ -173,6 +173,6 @@ export default {
 }
 .content_block{
   height: 100vh;
-  background: gray;
+  /* background: gray; */
 }
 </style>

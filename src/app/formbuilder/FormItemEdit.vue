@@ -1,6 +1,6 @@
 <template>
   <div class="form_edit_">
-    <button
+    <!-- <button
       class="element-edit"
       @click="active = true"
       color="primary"
@@ -8,36 +8,37 @@
       size="small"
     >
       Edit
-    </button>
+      
+    </button> -->
 
     <div class="row">
-      <div
-        class="edit_option"
-        v-if="item.type == 'input' || item.type == 'textarea'"
-      >
-        <input class="inputx" label="Display Name" :placeholder="item.name" />
-        {{ item.name }}
+      <div class="edit_option" v-if="item.formType == 'name'">
+        <form-name :item='item' :id="id"/>
+        <!-- <input class="inputx" label="Display Name" :placeholder="item.name" /> -->
+        
       </div>
       <div v-else><p>not input</p></div>
     </div>
   </div>
-</template> 
-
-
+</template>
 
 <script>
+import FormName from "./components/FormName.vue";
 export default {
-  props: ["item"],
+  props: ["item","id"],
 
   name: "FormItemEdit",
+  components: {
+    FormName,
+  },
   data() {
     return {
       active: false,
     };
   },
-  mounted() {
-    console.log("item", this.item);
-  },
+  // mounted() {
+  //   console.log("item", this.item);
+  // },
 };
 </script>
 
@@ -83,6 +84,7 @@ export default {
 .vs-component .vs-switch {
   border-radius: 12px !important;
 }
+.edit_option {
+    margin: 19px auto; 
+}
 </style>
-
-
