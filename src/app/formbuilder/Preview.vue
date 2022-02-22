@@ -8,6 +8,17 @@
          </div> -->
          <!-- {{new}} -->
       </div>
+       <div v-if="newStore.length===0">
+              <p>no data show</p>
+          </div>
+          <div v-else>
+      <div v-for="item in newStore" :key="item">
+          
+
+          {{item.name}} {{item.prefix}}  
+          </div>
+      </div>
+      <!-- {{newStore}} -->
   </div> 
 </template>
 
@@ -15,15 +26,16 @@
 <script>
     // import {store} from '../formbuilder/store'
 export default {
+    props:["store"],
     data() {
         return {
-            // store
+           newStore:this.store
         }
     },
- props: ["new"],
- mounted() {
-     console.log(this.new)
-     console.log('store',this.new);
- },
+//  props: ["new"],
+//  mounted() {
+//      console.log(this.new)
+//      console.log('store',this.new);
+//  },
 }
 </script>

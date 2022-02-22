@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h3>{{ title }}</h3>
-    <pre class="bg-gray-300 rounded-lg p-5">{{ value }}</pre>
+    <h3 >{{ title }}</h3>
+    <pre class="bg-gray-300 rounded-lg p-5">{{value}}</pre>
     <!-- <preview :newValue={value} /> -->
+     
   </div>
 </template>
 <script>
@@ -15,10 +16,20 @@ export default {
       type: String,
     },
     value: {
-      required: true,
+      required: true, 
     },
   },
+  data() {
+    return {
+      newValue:[]
+    }
+  },
+   
+  methods: {
+    
+  },
   mounted() {
+
     console.log(this.value)
   },
 }

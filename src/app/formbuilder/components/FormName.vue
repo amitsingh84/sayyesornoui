@@ -52,7 +52,7 @@
             class="form-check-input"
             type="checkbox"
             id="flexMiddleCheckDefault"
-            @click="showHideMiddlename" @input="$emit('input', $event.target.value)"
+            @click="showHideMiddlename"
           />
           <label class="form-check-label" for="flexMiddleCheckDefault">{{
             showMiddlename ? "on" : "off"
@@ -61,7 +61,7 @@
       </div>
       <button >Change Data</button>
       <div class="flex justify-between"> 
-        <json-display class="w-64"  :value="item" />
+        <!-- <json-display class="w-64"  :value="item" /> -->
         {{id}}
       </div>
     </div>
@@ -69,11 +69,11 @@
 </template>
 <script>
 "use strict"
-    import jsonDisplay from "../../formbuilder/jsonDisplay.vue";
+    // import jsonDisplay from "../../formbuilder/jsonDisplay.vue";
      import {store} from '../../formbuilder/store'
 export default {
     components: { 
-    jsonDisplay, 
+    // jsonDisplay, 
   },
   data() {
     return {
@@ -81,6 +81,8 @@ export default {
       showPrifix: false,
       showMiddlename: false,
       store,
+    //  items:this.item
+
       
     };
   },
@@ -89,8 +91,9 @@ export default {
     showOption() {},
     showHidePrefix() {
       this.showPrifix = !this.showPrifix; 
-      // eslint-disable-next-line vue/no-mutating-props
+    // eslint-disable-next-line vue/no-mutating-props
     this.item.prefix=this.showPrifix
+    
     },
     showHideMiddlename() {
       this.showMiddlename = !this.showMiddlename;
@@ -102,7 +105,7 @@ export default {
     },
   
   mounted() {
-      console.log('testing',this.item)
+      console.log('testing',this.showPrifix)
        this.store.push(this.item)
     // this.jsonDisplay.push(this.id)
   },

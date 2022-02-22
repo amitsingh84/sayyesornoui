@@ -1,13 +1,19 @@
 <template>
 <div class="container-fluid">
+  <div class="view_icon"><button @click="showPreview">Preview</button></div>
   <div class="new_form_demo row">
+    
+    
+     
     <div class="form_btn col-sm-12 col-md-2">
       <draggable
         class="dragArea list-group"
         :list="elements"
         :group="{ name: 'elements', pull: 'clone', put: false }"
-        item-key="name"
-         :clone="onClone"
+        item-key="id"
+         :clone="onClone" 
+         :sort="false" 
+         
       >
         <template #item="{ element }">
           <div class="list-group-item">
@@ -17,22 +23,28 @@
       </draggable>
     </div>
     <div class="form_content  col-sm-12 col-md-8">
+      
       <draggable
         class="content_block"
         :list="newElements"
-        group="elements"
-        item-key="name"
+       
+        item-key="id"
+         tag="transition-group"
+         v-bind="dragOptions"
+         
         
       >
         <template #item="{ element, index }">
           <div>
+            
             <FormItemEdit
               :item="element"
               :index="index"
               :items="newElements"
-              :id="index+4"
+              :id="index"
+              
             ></FormItemEdit>
-            
+            <!-- <i class="fa fa-times close" @click="removeAt(index)">Delete</i> -->
           </div>
         </template>
       </draggable>
@@ -44,12 +56,13 @@
         <json-display class="w-64" :value="newElements" />
       </div>
     </div>
-    <div class="col-md-4">
-       <preview :new="newElements"/> 
+    
+    
+  </div>
+  <div>
+       <preview :store="newElements"/> 
       
     </div>
-  </div>
-  
   </div>
 </template>
 
@@ -59,7 +72,7 @@ import draggable from "vuedraggable";
 import FormItemEdit from "./FormItemEdit.vue";
 import jsonDisplay from "./jsonDisplay.vue";
 import { elements } from "./componentConfig.js";
-// import { store } from "./store.js";
+import { store } from "./store.js";
 import Preview from './Preview.vue';
 export default {
   components: {
@@ -68,14 +81,22 @@ export default {
     FormItemEdit,
     Preview,
   },
+  computed: {
+    dragOptions() {
+      return {
+        animation: 300,
+       group:"elements",  
+      };
+    }
+  },
   data() {
-    return {
+    return { 
       elements,
-      drag: false,
+      view:false, 
       // elements: [
       //   {
       //     type: "container",
-      //     name: "Container",
+      //     id: "Container",
       //     container: true,
       //     items: [],
       //     id: 0,
@@ -106,28 +127,41 @@ export default {
       newElements: [],
       draggable: false,
       elIndex: 0,
-      // store,
-      uID:0
+      store,
+      uID:0,
+     
     };
   },
 
   mounted() {
-    this._loadComponents();
+    // this._loadComponents();
+    // this.store=this.newElements
     // this.store.push(this.newElements)
   },
   methods: {
-    _loadComponents() {
-      this.elements = this.elements.map((item) => {
-        return {
-          ...item,
-          // name: this.$t(`fm.components.fields.${item.type}`),
-        };
-      });
+    showPreview(){
+      this.view=!this.view
     },
+    //  removeAt(idx) {
+    //   this.newElements.splice(idx, 1);
+    //   console.log(idx);
+    // },
+    // checkMove(evt) {
+    //     console.log(evt)
+    //     return false
+    // },
+    // _loadComponents() {
+    //   this.elements = this.elements.map((item) => {
+    //     return {
+    //       ...item,
+    //       // name: this.$t(`fm.components.fields.${item.type}`),
+    //     };
+    //   });
+    // },
     onClone(item){
       this.elIndex++;
-      console.log(item);
-
+      console.log(this.newElements);
+    console.log('store in ',this.store);
       if(item.formType=='name'){
         return{formType:item.formType,
           type: item.type,
